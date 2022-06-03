@@ -29,3 +29,6 @@ In this example we assume that your are running the script from `/home/username/
 
 # How to use this script
 This script gives you the ability to curate a list of channels you would like to archive and then pull down un-archived content whenever you like. It also adds in the benefit of folder based organization for easier reference later. 
+
+# Troubleshooting
+Depending on where pip placed your version of `yt-dlp` you may need to add `/home/<username>/.local/bin` to your $PATH
