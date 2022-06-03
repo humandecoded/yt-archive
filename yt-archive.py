@@ -48,3 +48,4 @@ for channel in channel_list:
 # todo:if no folder provided in csv, use channel name
 # todo:add "episode numbers" to file name, chronologically
 # todo:generate log of activity/errors in a given run
+# todo: add option to pass in additional yt-dlp params
