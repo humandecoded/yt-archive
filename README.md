@@ -2,6 +2,8 @@
 
 This is a very simple script that adds some folder organization to yt-dlp. 
 
+https://github.com/yt-dlp/yt-dlp
+
 yt-dlp allows us to iterate through a list of urls to download with `-a, --batch-file FILE`
 and also allows us to specify where to save files with `-P, --paths [TYPES:]PATH` but doesn't give us the ability to to iterate through a batch of urls and save them somewhere specific, i.e. save each URL to a specific folder.
 
