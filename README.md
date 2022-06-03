@@ -9,7 +9,7 @@ This script adds that functionality.
 
 It depends on three pieces of information
 
-* `--channel-list <csv file>` This is the path to a csv file containing `<url you want to download>, <name/path of folder to save those files to>`
+* `--channel-list <csv file>` This is the path to a csv file containing `<url you want to download>, <name of folder to save those files to>`
 * `--archive-location <archive file containing previous downloads>` yt-dlp give you the functionality to track what you've downloaded and skip those videos in the future. This flag points to a the file that will contain that history. If the file doesn't already exist, it will be created. The default value is `<current directory>/archive.txt`
 * `--save-location <root folder to save in>` This is the folder where the various sub-folders will be saved. The default is the directory you are running the script from.
 
