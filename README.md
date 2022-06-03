@@ -1,3 +1,10 @@
+# Disclaimer: You can also do this with yt-dlp itself! 
+The functionality this script aims to introduce does exist within yt-dlp itself. The below example will reference a list of urls you would like to check on `channels.txt`, reference `archive.txt` to see what's already been downloaded and will save the various downloads in folders named after the channel. Additionally, it also numbers them in chronological order so the most recent video should be the highest number:
+
+`yt-dlp -o "%(uploader)s/%(playlist_count+1-playlist_index)s - %(title)s.%(ext)s" -a channels.txt --download-archive archive.txt`
+
+This naming scheme does fall apart if videos are removed from the playlist so may not be ideal for everyone.
+
 # yt-archive - An archival/organizational wrapper for yt-dlp
 
 This is a very simple script that adds some folder organization to yt-dlp. 
@@ -5,7 +12,7 @@ This is a very simple script that adds some folder organization to yt-dlp.
 https://github.com/yt-dlp/yt-dlp
 
 yt-dlp allows us to iterate through a list of urls to download with `-a, --batch-file FILE`
-and also allows us to specify where to save files with `-P, --paths [TYPES:]PATH` but doesn't give us the ability to to iterate through a batch of urls and save them somewhere specific, i.e. save each URL to a specific folder.
+and also allows us to specify where to save files with `-P, --paths [TYPES:]PATH` ~~but doesn't give us the ability to to iterate through a batch of urls and save them somewhere specific, i.e. save each URL to a specific folder.~~
 
 This script adds that functionality. 
 
