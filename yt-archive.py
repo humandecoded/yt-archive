@@ -7,7 +7,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--channel-list", required=True, help="path to csv list of youtube channels")
 parser.add_argument("--archive-location", default="archive.txt", help="location of yt-dlp archive file")
-parser.add_argument("--save-location", default=".", help="folder to save your downloads")
+parser.add_argument("--save-location", default="", help="folder to save your downloads")
 args = vars(parser.parse_args())
 
 channel_list_path = args["channel_list"]
@@ -24,8 +24,15 @@ with open(channel_list_path, "r") as f:
 
 # loop through each channel url
 for channel in channel_list:
+    
     url = channel[0]
-    save_location = f"{folder_location}{channel[1].strip()}"
+    if folder_location == "":
+        save_location = f"{channel[1].strip()}"
+    else:
+        # check for slash at the end of argument
+        if folder_location[-1] != "/":
+            folder_location = folder_location + "/"
+        save_location = f"{folder_location}{channel[1].strip()}"
     
     # if directory doesn't exist, create it
     if not os.path.isdir(save_location):
