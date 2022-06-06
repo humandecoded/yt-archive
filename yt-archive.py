@@ -14,6 +14,7 @@ channel_list_path = args["channel_list"]
 archive_location = args["archive_location"]
 folder_location = args["save_location"]
 
+file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
 
 
 # read our channels.csv in to a list
@@ -37,15 +38,26 @@ for channel in channel_list:
     # if directory doesn't exist, create it
     if not os.path.isdir(save_location):
         os.makedirs(save_location)
-   # run yt_dlp 
-    yt_dlp = subprocess.run(["yt-dlp", 
+
+   # check for audio-only flag
+    if channel[-1].strip() == "audio":
+        file_name_format = "%(upload_date)s - %(title)s - audio.%(ext)s"
+        # run yt_dlp 
+        yt_dlp = subprocess.run(["yt-dlp", 
+            "-P", f"{save_location}", 
+            "--download-archive", f"{archive_location}",
+            "-o", file_name_format,
+            "-f", "ba",
+            f"{url}"])
+    else:
+        yt_dlp = subprocess.run(["yt-dlp", 
         "-P", f"{save_location}", 
-        "--download-archive", f"{archive_location}", 
+        "--download-archive", f"{archive_location}",
+        "-o", file_name_format,
         f"{url}"])
 
 
 # todo:build a new archive file from existing downloads
 # todo:if no folder provided in csv, use channel name
-# todo:add "episode numbers" to file name, chronologically
 # todo:generate log of activity/errors in a given run
 # todo: add option to pass in additional yt-dlp params

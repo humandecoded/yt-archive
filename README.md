@@ -22,6 +22,12 @@ It depends on three pieces of information
 * `--archive-location <archive file containing previous downloads>` yt-dlp give you the functionality to track what you've downloaded and skip those videos in the future. This flag points to a the file that will contain that history. If the file doesn't already exist, it will be created. The default value is `<current directory>/archive.txt`
 * `--save-location <root folder to save in>` This is the folder where the various sub-folders will be saved. The default is the directory you are running the script from.
 
+# Audio Only Option
+With some channels, you may only want to download the audio (No Sleep, Creepy Pastas, etc...). In the csv file containing your urls and save folders, you can spedicfy a third field. If the third element is `audio` then that yt-dlp will only download the audio portion of that url.
+
+You can see an example of this in the `example.csv`
+
+
 # Example
 In this example we assume that your are running the script from `/home/username/yt-archive` and you have a seperate folder in your home directory you want to save your downloads to.
 
