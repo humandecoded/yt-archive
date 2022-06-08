@@ -50,6 +50,7 @@ for channel in channel_list:
             "-f", "ba",
             f"{url}"])
     else:
+        file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
         yt_dlp = subprocess.run(["yt-dlp", 
         "-P", f"{save_location}", 
         "--download-archive", f"{archive_location}",
