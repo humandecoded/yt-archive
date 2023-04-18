@@ -49,6 +49,7 @@ with open(log_path, "a") as f:
             yt_dlp = subprocess.run(["yt-dlp", 
                 "-P", f"{save_location}", 
                 "--download-archive", f"{archive_location}",
+                "--match-filters", "availability=public",
                 "-o", file_name_format,
                 "-f", "ba", "--dateafter", "20230301",
                 f"{url}"], stderr=f)
@@ -57,6 +58,7 @@ with open(log_path, "a") as f:
             yt_dlp = subprocess.run(["yt-dlp", 
             "-P", f"{save_location}", 
             "--download-archive", f"{archive_location}",
+            "--match-filters", "availability=public",
             "-o", file_name_format, "--dateafter", "20230301",
             f"{url}"], stderr=f)
     
