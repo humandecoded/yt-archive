@@ -51,7 +51,7 @@ with open(log_path, "a") as f:
                 "--download-archive", f"{archive_location}",
                 "--match-filters", "availability=public",
                 "-o", file_name_format,
-                "-f", "ba", "--dateafter", "20230301",
+                "-f", "ba", 
                 f"{url}"], stderr=f)
         else:
             file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
@@ -59,9 +59,21 @@ with open(log_path, "a") as f:
             "-P", f"{save_location}", 
             "--download-archive", f"{archive_location}",
             "--match-filters", "availability=public",
-            "-o", file_name_format, "--dateafter", "20230301",
+            "-o", file_name_format,
             f"{url}"], stderr=f)
-    
+# parse out the error log to just the ones we care about    
+log_file_list = []
+with open(log_path, "r") as f:
+    for x in f.readlines():
+        if "Private video" not in x and "Premier" not in x and "hidden" not in x:
+            print("logging " + x)
+            log_file_list.append(x)
+        
+# rewrite just the logs we parsed out above
+with open(log_path, "w") as f:
+    for line in log_file_list:
+        f.write(f"{line}\n")
+#delete file if no errors to report
 if os.path.getsize(log_path) == 0:
     os.remove(log_path)
 
