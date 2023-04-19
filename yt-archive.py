@@ -52,7 +52,7 @@ with open(log_path, "a") as f:
                 "--match-filters", "availability=public",
                 "-o", file_name_format,
                 "-f", "ba", 
-                f"{url}"], stderr=f)
+                f"{url}"], stderr=f, stdout=f)
         else:
             file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
             yt_dlp = subprocess.run(["yt-dlp", 
@@ -60,14 +60,18 @@ with open(log_path, "a") as f:
             "--download-archive", f"{archive_file}",
             "--match-filters", "availability=public",
             "-o", file_name_format,
-            f"{url}"], stderr=f)
-# parse out the error log to just the ones we care about    
+            f"{url}"], stderr=f, stdout=f)
+
+# parse out log to get errors we care about and downloads  
 log_file_list = []
 with open(log_path, "r") as f:
     for x in f.readlines():
-        if "Private video" not in x and "Premier" not in x and "hidden" not in x:
+        if "ERROR:" in x and "Private video" not in x and "Premier" not in x and "hidden" not in x:
             print("logging " + x)
-            log_file_list.append(x)
+            log_file_list.append(x.split(".")[0])
+        elif "[download] Destination" in x:
+            print("logging " + x)
+            log_file_list.append(x.split(".")[0])
         
 # rewrite just the logs we parsed out above
 with open(log_path, "w") as f:
@@ -80,3 +84,4 @@ if os.path.getsize(log_path) == 0:
 # todo:option to build out archive file without downwloading
 # todo: add option to pass in additional yt-dlp params
 # todo: explore importing yt-dlp as python library
+# todo: log successful  downloads
