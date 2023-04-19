@@ -6,13 +6,13 @@ from datetime import datetime
 # parse out arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--channel-list", required=True, help="path to csv list of youtube channels")
-parser.add_argument("--archive-location", default="archive.txt", help="location of yt-dlp archive file")
-parser.add_argument("--save-location", default="", help="folder to save your downloads")
+parser.add_argument("--archive-file", default="archive.txt", help="location of yt-dlp archive file")
+parser.add_argument("--save-folder", default="", help="folder to save your downloads")
 args = vars(parser.parse_args())
 
 channel_list_path = args["channel_list"]
-archive_location = args["archive_location"]
-folder_location = args["save_location"]
+archive_file = args["archive_file"]
+folder_location = args["save_folder"]
 
 file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
 
@@ -26,7 +26,7 @@ with open(channel_list_path, "r") as f:
 log_name = datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + ".log"
 log_path = folder_location + log_name
 with open(log_path, "a") as f:
-# loop through each channel url
+# loop through each channel url and its folder name
     for channel in channel_list:
         
         url = channel[0]
@@ -48,7 +48,7 @@ with open(log_path, "a") as f:
             # run yt_dlp 
             yt_dlp = subprocess.run(["yt-dlp", 
                 "-P", f"{save_location}", 
-                "--download-archive", f"{archive_location}",
+                "--download-archive", f"{archive_file}",
                 "--match-filters", "availability=public",
                 "-o", file_name_format,
                 "-f", "ba", 
@@ -57,7 +57,7 @@ with open(log_path, "a") as f:
             file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
             yt_dlp = subprocess.run(["yt-dlp", 
             "-P", f"{save_location}", 
-            "--download-archive", f"{archive_location}",
+            "--download-archive", f"{archive_file}",
             "--match-filters", "availability=public",
             "-o", file_name_format,
             f"{url}"], stderr=f)
@@ -77,7 +77,6 @@ with open(log_path, "w") as f:
 if os.path.getsize(log_path) == 0:
     os.remove(log_path)
 
-# todo:build a new archive file from existing downloads
-# todo:if no folder provided in csv, use channel name
-# todo:generate log of activity/errors in a given run
+# todo:option to build out archive file without downwloading
 # todo: add option to pass in additional yt-dlp params
+# todo: explore importing yt-dlp as python library
