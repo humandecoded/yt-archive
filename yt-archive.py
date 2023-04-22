@@ -72,7 +72,10 @@ with open(log_path, "r") as f:
         elif "[download] Destination" in x:
             print("logging " + x)
             log_file_list.append(x.split(".")[0])
-        
+
+# get rid of duplicates
+log_file_list = list(set(log_file_list))
+
 # rewrite just the logs we parsed out above
 with open(log_path, "w") as f:
     for line in log_file_list:
