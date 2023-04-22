@@ -76,7 +76,7 @@ with open(log_path, "r") as f:
 # rewrite just the logs we parsed out above
 with open(log_path, "w") as f:
     for line in log_file_list:
-        f.write(f"{line}\n")
+        f.write(f"{line}\n\n")
 #delete file if no errors to report
 if os.path.getsize(log_path) == 0:
     os.remove(log_path)
@@ -84,4 +84,4 @@ if os.path.getsize(log_path) == 0:
 # todo:option to build out archive file without downwloading
 # todo: add option to pass in additional yt-dlp params
 # todo: explore importing yt-dlp as python library
-# todo: log successful  downloads
+
