@@ -15,7 +15,7 @@ def check_log_output(line):
         and "Private video" not in line 
         and "Premier" not in line 
         and "hidden" not in line):
-        return True
+        return False
     elif "[download] Destination" in line:
         return True
     
