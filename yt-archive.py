@@ -100,7 +100,7 @@ for channel in channel_list:
     for line in errorput.decode("utf-8").split("\n"):
         if check_log_output(line):
             print("Logging: " + line)
-            log_file_list.append(line)
+            log_file_list.append(channel[2] + " " + line)
         
 
 # get rid of duplicates
