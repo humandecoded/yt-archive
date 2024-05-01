@@ -3,7 +3,7 @@ import subprocess
 import os 
 import argparse
 from datetime import datetime
-
+import random
 #this script is a wrapper for yt-dlp that reads a csv of youtube channels and downloads their videos
 #it also creates a log file of the downloads and errors
 
@@ -27,6 +27,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--channel-list", required=True, help="path to csv list of youtube channels")
 parser.add_argument("--archive-file", default="archive.txt", help="location of yt-dlp archive file")
 parser.add_argument("--save-folder", default="", help="folder to save your downloads")
+parser.add_argument("--proxy", default="", help="list of proxies to rotate through")
 args = vars(parser.parse_args())
 
 #assign arguments to variables
@@ -36,6 +37,18 @@ folder_location = args["save_folder"]
 
 file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
 
+#read in proxy list
+proxy_list = []
+if args["proxy"] != "":
+    with open(args["proxy"], "r") as f:
+        for proxy in f.readlines():
+            proxy_list.append(proxy)
+        # randomly select a proxy from the list
+
+        proxy = "http://" + random.choice(proxy_list)
+        print(f"Using proxy: {proxy}")
+else:
+    proxy = ""
 
 # read our channels.csv in to a list
 # each entry is two elements: the channel url and the folder name
@@ -78,6 +91,8 @@ for channel in channel_list:
             "--match-filters", "availability=public",
             "-o", file_name_format,
             "-f", "ba", 
+             "--proxy", proxy,
+            "--limit-rate", "3M",
             f"{url}"], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     else:
         file_name_format = "%(upload_date)s - %(title)s.%(ext)s"
@@ -85,6 +100,8 @@ for channel in channel_list:
         "-P", f"{save_location}", 
         "--download-archive", f"{archive_file}",
         "--match-filters", "availability=public",
+        "--limit-rate", "3M",
+        "--proxy", proxy,
         "-o", file_name_format,
         f"{url}"], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
